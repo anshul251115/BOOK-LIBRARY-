@@ -3,16 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0b1020">
+<meta name="theme-color" content="#080b16">
 
 <title>BookNest — Online Library</title>
 
 <!-- Bootstrap -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet">
 
 <!-- Bootstrap Icons -->
-<link rel="stylesheet"
-href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 <!-- EmailJS -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -49,10 +52,8 @@ body{
     font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
 
-/* NAVBAR */
-
 .navbar{
-    background:rgba(8,11,22,.82)!important;
+    background:rgba(8,11,22,.88)!important;
     backdrop-filter:blur(18px);
     border-bottom:1px solid var(--border);
     position:sticky;
@@ -86,8 +87,6 @@ body{
     color:white!important;
 }
 
-/* HERO */
-
 .hero{
     padding:75px 0 55px;
 }
@@ -97,9 +96,11 @@ body{
     border-radius:30px;
     padding:55px;
     background:
-        linear-gradient(135deg,
-        rgba(124,92,255,.18),
-        rgba(34,211,238,.05)),
+        linear-gradient(
+            135deg,
+            rgba(124,92,255,.18),
+            rgba(34,211,238,.05)
+        ),
         rgba(17,23,41,.82);
     box-shadow:0 30px 80px rgba(0,0,0,.25);
     overflow:hidden;
@@ -129,6 +130,7 @@ body{
 .gradient-text{
     background:linear-gradient(90deg,#a78bfa,#22d3ee);
     -webkit-background-clip:text;
+    background-clip:text;
     color:transparent;
 }
 
@@ -139,8 +141,6 @@ body{
     position:relative;
     z-index:2;
 }
-
-/* BUTTONS */
 
 .btn-primary-custom{
     background:linear-gradient(135deg,var(--primary),#5b4bdc);
@@ -171,8 +171,6 @@ body{
     background:rgba(255,255,255,.08);
 }
 
-/* SEARCH */
-
 .search-box{
     position:relative;
 }
@@ -182,6 +180,7 @@ body{
     left:16px;
     top:14px;
     color:#8892aa;
+    z-index:2;
 }
 
 .search-box input{
@@ -204,8 +203,6 @@ body{
     box-shadow:0 0 0 3px rgba(124,92,255,.12);
 }
 
-/* SECTION */
-
 .section-title{
     font-size:30px;
     font-weight:850;
@@ -214,8 +211,6 @@ body{
 .section-subtitle{
     color:var(--muted);
 }
-
-/* BOOK CARD */
 
 .book-card{
     height:100%;
@@ -318,8 +313,6 @@ body{
     color:#ff5d73;
 }
 
-/* STATS */
-
 .stats-card{
     background:#111729;
     border:1px solid var(--border);
@@ -331,8 +324,6 @@ body{
     font-size:28px;
     font-weight:900;
 }
-
-/* MODALS */
 
 .modal-content{
     background:#111729;
@@ -365,12 +356,14 @@ body{
     box-shadow:0 0 0 3px rgba(124,92,255,.12);
 }
 
+.form-control::placeholder{
+    color:#69738c;
+}
+
 .form-label{
     color:#cbd2e5;
     font-weight:600;
 }
-
-/* READER */
 
 .reader-screen{
     display:none;
@@ -421,8 +414,6 @@ body{
     margin-bottom:25px;
 }
 
-/* LOGIN USER */
-
 .user-avatar{
     width:38px;
     height:38px;
@@ -434,8 +425,6 @@ body{
     font-weight:800;
 }
 
-/* FOOTER */
-
 footer{
     border-top:1px solid var(--border);
     margin-top:70px;
@@ -443,14 +432,13 @@ footer{
     color:var(--muted);
 }
 
-/* TOAST */
-
 .toast-box{
     position:fixed;
     right:20px;
     bottom:20px;
     z-index:5000;
     min-width:270px;
+    max-width:calc(100vw - 40px);
     background:#151c31;
     border:1px solid var(--border);
     border-radius:15px;
@@ -463,15 +451,40 @@ footer{
     display:block;
 }
 
-/* EMPTY */
-
 .empty{
     text-align:center;
     padding:60px 20px;
     color:var(--muted);
 }
 
-/* RESPONSIVE */
+.email-status{
+    display:none;
+    border-radius:12px;
+    padding:12px 14px;
+    margin-bottom:15px;
+    font-size:14px;
+}
+
+.email-status.show{
+    display:block;
+}
+
+.email-status.error{
+    background:rgba(255,93,115,.10);
+    border:1px solid rgba(255,93,115,.25);
+    color:#ff9aaa;
+}
+
+.email-status.success{
+    background:rgba(34,211,238,.10);
+    border:1px solid rgba(34,211,238,.25);
+    color:#7eeaf7;
+}
+
+.no-select{
+    user-select:none;
+    -webkit-user-select:none;
+}
 
 @media(max-width:768px){
 
@@ -499,13 +512,13 @@ footer{
     .reader-text{
         font-size:18px;
     }
-}
 
-/* PREVENT SELECTION IN UI */
-
-.no-select{
-    user-select:none;
-    -webkit-user-select:none;
+    .toast-box{
+        right:15px;
+        bottom:15px;
+        left:15px;
+        min-width:0;
+    }
 }
 </style>
 </head>
@@ -513,19 +526,21 @@ footer{
 <body>
 
 <!-- NAVBAR -->
-
 <nav class="navbar navbar-expand-lg">
 <div class="container">
 
-<a class="navbar-brand d-flex align-items-center gap-2 text-white" href="#">
+<a class="navbar-brand d-flex align-items-center gap-2 text-white" href="#home">
     <div class="logo">
         <i class="bi bi-book-half"></i>
     </div>
     <span class="brand">BookNest</span>
 </a>
 
-<button class="navbar-toggler bg-light" type="button"
-data-bs-toggle="collapse" data-bs-target="#nav">
+<button
+    class="navbar-toggler bg-light"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#nav">
     <span class="navbar-toggler-icon"></span>
 </button>
 
@@ -546,9 +561,10 @@ data-bs-toggle="collapse" data-bs-target="#nav">
 </li>
 
 <li class="nav-item" id="authArea">
-<button class="btn btn-primary-custom ms-lg-2"
-onclick="openLogin()">
-Login
+<button
+    class="btn btn-primary-custom ms-lg-2"
+    onclick="openLogin()">
+    Login
 </button>
 </li>
 
@@ -560,13 +576,10 @@ Login
 
 
 <!-- MAIN -->
-
 <main>
 
 <!-- HERO -->
-
 <section class="hero" id="home">
-
 <div class="container">
 
 <div class="hero-box">
@@ -576,7 +589,8 @@ Login
 <div class="col-lg-8">
 
 <div class="tag mb-3">
-<i class="bi bi-stars"></i> YOUR DIGITAL LIBRARY
+<i class="bi bi-stars"></i>
+YOUR DIGITAL LIBRARY
 </div>
 
 <h1>
@@ -591,15 +605,17 @@ distraction-free reading experience directly in your browser.
 
 <div class="d-flex flex-wrap gap-2 mt-4">
 
-<button class="btn btn-primary-custom"
-onclick="scrollToLibrary()">
-<i class="bi bi-book"></i>
-Explore Library
+<button
+    class="btn btn-primary-custom"
+    onclick="scrollToLibrary()">
+    <i class="bi bi-book"></i>
+    Explore Library
 </button>
 
-<button class="btn btn-outline-custom"
-onclick="openSignup()">
-Create Free Account
+<button
+    class="btn btn-outline-custom"
+    onclick="openSignup()">
+    Create Free Account
 </button>
 
 </div>
@@ -608,22 +624,21 @@ Create Free Account
 
 <div class="col-lg-4 text-center d-none d-lg-block">
 
-<i class="bi bi-bookshelf"
-style="font-size:170px;color:#a78bfa;opacity:.8;"></i>
+<i
+    class="bi bi-bookshelf"
+    style="font-size:170px;color:#a78bfa;opacity:.8;">
+</i>
 
 </div>
 
 </div>
 
 </div>
-
 </div>
-
 </section>
 
 
 <!-- STATS -->
-
 <section class="container mb-5">
 
 <div class="row g-3">
@@ -659,16 +674,13 @@ style="font-size:170px;color:#a78bfa;opacity:.8;"></i>
 </div>
 
 </div>
-
 </section>
 
 
 <!-- LIBRARY -->
-
 <section class="container" id="library">
 
-<div class="d-flex flex-wrap justify-content-between
-align-items-end gap-3 mb-4">
+<div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
 
 <div>
 
@@ -687,11 +699,10 @@ Find your next favourite book.
 <i class="bi bi-search"></i>
 
 <input
-id="searchInput"
-type="search"
-class="form-control"
-placeholder="Search books or authors..."
-oninput="renderBooks()">
+    id="searchInput"
+    type="search"
+    class="form-control"
+    placeholder="Search books or authors...">
 
 </div>
 
@@ -700,33 +711,42 @@ oninput="renderBooks()">
 
 <div class="d-flex gap-2 flex-wrap mb-4">
 
-<button class="btn btn-sm btn-primary-custom"
-onclick="setCategory('All')">
-All
+<button
+    class="btn btn-sm btn-primary-custom category-btn"
+    data-category="All"
+    onclick="setCategory('All')">
+    All
 </button>
 
-<button class="btn btn-sm btn-outline-custom"
-onclick="setCategory('Classic')">
-Classic
+<button
+    class="btn btn-sm btn-outline-custom category-btn"
+    data-category="Classic"
+    onclick="setCategory('Classic')">
+    Classic
 </button>
 
-<button class="btn btn-sm btn-outline-custom"
-onclick="setCategory('Adventure')">
-Adventure
+<button
+    class="btn btn-sm btn-outline-custom category-btn"
+    data-category="Adventure"
+    onclick="setCategory('Adventure')">
+    Adventure
 </button>
 
-<button class="btn btn-sm btn-outline-custom"
-onclick="setCategory('Mystery')">
-Mystery
+<button
+    class="btn btn-sm btn-outline-custom category-btn"
+    data-category="Mystery"
+    onclick="setCategory('Mystery')">
+    Mystery
 </button>
 
-<button class="btn btn-sm btn-outline-custom"
-onclick="setCategory('Fantasy')">
-Fantasy
+<button
+    class="btn btn-sm btn-outline-custom category-btn"
+    data-category="Fantasy"
+    onclick="setCategory('Fantasy')">
+    Fantasy
 </button>
 
 </div>
-
 
 <div id="bookGrid" class="row g-4"></div>
 
@@ -734,7 +754,6 @@ Fantasy
 
 
 <!-- SAVED -->
-
 <section class="container mt-5 pt-5" id="saved">
 
 <h2 class="section-title">
@@ -754,7 +773,6 @@ Your personal reading list.
 
 
 <!-- FOOTER -->
-
 <footer>
 
 <div class="container text-center">
@@ -777,7 +795,6 @@ Read online. Save favourites. Enjoy your library.
 
 
 <!-- LOGIN MODAL -->
-
 <div class="modal fade" id="loginModal" tabindex="-1">
 
 <div class="modal-dialog modal-dialog-centered">
@@ -790,8 +807,10 @@ Read online. Save favourites. Enjoy your library.
 Welcome back
 </h5>
 
-<button class="btn-close btn-close-white"
-data-bs-dismiss="modal"></button>
+<button
+    class="btn-close btn-close-white"
+    data-bs-dismiss="modal">
+</button>
 
 </div>
 
@@ -806,10 +825,11 @@ Email
 </label>
 
 <input
-id="loginEmail"
-type="email"
-class="form-control"
-required>
+    id="loginEmail"
+    type="email"
+    class="form-control"
+    autocomplete="email"
+    required>
 
 </div>
 
@@ -820,15 +840,18 @@ Password
 </label>
 
 <input
-id="loginPassword"
-type="password"
-class="form-control"
-required>
+    id="loginPassword"
+    type="password"
+    class="form-control"
+    autocomplete="current-password"
+    required>
 
 </div>
 
-<button class="btn btn-primary-custom w-100">
-Login
+<button
+    class="btn btn-primary-custom w-100"
+    type="submit">
+    Login
 </button>
 
 </form>
@@ -837,22 +860,21 @@ Login
 
 Don't have an account?
 
-<button class="btn btn-link p-0"
-onclick="switchToSignup()">
-Sign up
+<button
+    class="btn btn-link p-0"
+    onclick="switchToSignup()">
+    Sign up
 </button>
 
 </div>
 
 </div>
-
 </div>
 </div>
 </div>
 
 
 <!-- SIGNUP MODAL -->
-
 <div class="modal fade" id="signupModal" tabindex="-1">
 
 <div class="modal-dialog modal-dialog-centered">
@@ -865,8 +887,10 @@ Sign up
 Create your BookNest account
 </h5>
 
-<button class="btn-close btn-close-white"
-data-bs-dismiss="modal"></button>
+<button
+    class="btn-close btn-close-white"
+    data-bs-dismiss="modal">
+</button>
 
 </div>
 
@@ -881,11 +905,12 @@ Your Name
 </label>
 
 <input
-id="signupName"
-name="user_name"
-type="text"
-class="form-control"
-required>
+    id="signupName"
+    name="user_name"
+    type="text"
+    class="form-control"
+    autocomplete="name"
+    required>
 
 </div>
 
@@ -896,11 +921,12 @@ Email
 </label>
 
 <input
-id="signupEmail"
-name="user_email"
-type="email"
-class="form-control"
-required>
+    id="signupEmail"
+    name="user_email"
+    type="email"
+    class="form-control"
+    autocomplete="email"
+    required>
 
 </div>
 
@@ -911,26 +937,38 @@ Password
 </label>
 
 <input
-id="signupPassword"
-name="password"
-type="password"
-class="form-control"
-minlength="6"
-required>
+    id="signupPassword"
+    name="password"
+    type="password"
+    class="form-control"
+    minlength="6"
+    autocomplete="new-password"
+    required>
 
 </div>
 
+<!--
+    EmailJS will receive these fields.
+    Password is intentionally NOT included
+    in the email message.
+-->
+
 <input
-type="hidden"
-name="message"
-value="Welcome to BookNest. Your library account has been created successfully.">
+    type="hidden"
+    name="message"
+    value="Welcome to BookNest! Your library account has been created successfully.">
+
+<div
+    id="emailStatus"
+    class="email-status">
+</div>
 
 <button
-id="signupButton"
-class="btn btn-primary-custom w-100"
-type="submit">
+    id="signupButton"
+    class="btn btn-primary-custom w-100"
+    type="submit">
 
-Create Account
+    Create Account
 
 </button>
 
@@ -940,81 +978,76 @@ Create Account
 
 Already registered?
 
-<button class="btn btn-link p-0"
-onclick="switchToLogin()">
-Login
+<button
+    class="btn btn-link p-0"
+    onclick="switchToLogin()">
+    Login
 </button>
 
 </div>
 
 </div>
-
 </div>
 </div>
 </div>
 
 
 <!-- READER -->
-
 <div class="reader-screen" id="readerScreen">
 
 <div class="reader-top">
 
 <div class="container-fluid">
 
-<div class="d-flex align-items-center
-justify-content-between py-3">
+<div class="d-flex align-items-center justify-content-between py-3">
 
-<button class="btn btn-outline-custom"
-onclick="closeReader()">
+<button
+    class="btn btn-outline-custom"
+    onclick="closeReader()">
 
-<i class="bi bi-arrow-left"></i>
-Back
+    <i class="bi bi-arrow-left"></i>
+    Back
 
 </button>
 
 <div class="d-flex gap-2">
 
-<button class="btn btn-outline-custom"
-onclick="showToast('Downloading books is disabled.')"
-title="Download disabled">
+<button
+    class="btn btn-outline-custom"
+    onclick="showToast('Downloading books is disabled.')"
+    title="Download disabled">
 
-<i class="bi bi-download"></i>
-
-</button>
-
-<button class="btn btn-outline-custom"
-onclick="showToast('Printing is disabled.')"
-title="Print disabled">
-
-<i class="bi bi-printer"></i>
+    <i class="bi bi-download"></i>
 
 </button>
 
-</div>
+<button
+    class="btn btn-outline-custom"
+    onclick="showToast('Printing is disabled.')"
+    title="Print disabled">
+
+    <i class="bi bi-printer"></i>
+
+</button>
 
 </div>
 
 </div>
-
+</div>
 </div>
 
 
 <div class="reader-content no-select">
 
-<h1 class="reader-title"
-id="readerTitle">
+<h1 class="reader-title" id="readerTitle">
 Book
 </h1>
 
-<div class="reader-author"
-id="readerAuthor">
+<div class="reader-author" id="readerAuthor">
 Author
 </div>
 
-<div class="reader-text"
-id="readerText">
-</div>
+<div class="reader-text" id="readerText"></div>
 
 <div class="text-center mt-5 pt-5">
 
@@ -1029,28 +1062,29 @@ This reader is designed for online reading.
 </div>
 
 </div>
-
 </div>
 
 
 <!-- TOAST -->
-
 <div class="toast-box" id="toastBox">
+
 <div class="d-flex gap-2 align-items-start">
 
-<i class="bi bi-info-circle"
-style="color:#a78bfa"></i>
+<i
+    class="bi bi-info-circle"
+    style="color:#a78bfa">
+</i>
 
 <div id="toastMessage">
 Message
 </div>
 
 </div>
+
 </div>
 
 
-<!-- BOOTSTRAP -->
-
+<!-- Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 
@@ -1061,12 +1095,39 @@ Message
 ========================================================= */
 
 const EMAILJS_SERVICE_ID = "service_y8sw1vp";
-const EMAILJS_TEMPLATE_ID = "template_tvj0hnq";
+
+/* NEW TEMPLATE ID */
+const EMAILJS_TEMPLATE_ID = "template_77p6jj8";
+
 const EMAILJS_PUBLIC_KEY = "kR99j_G63iMQWnNeB";
 
-emailjs.init({
-    publicKey: EMAILJS_PUBLIC_KEY
-});
+
+/* Initialize EmailJS safely */
+let emailJSReady = false;
+
+try {
+
+    if(typeof emailjs !== "undefined"){
+
+        emailjs.init({
+            publicKey: EMAILJS_PUBLIC_KEY
+        });
+
+        emailJSReady = true;
+
+        console.log("EmailJS initialized successfully.");
+
+    }else{
+
+        console.error("EmailJS library did not load.");
+
+    }
+
+}catch(error){
+
+    console.error("EmailJS initialization error:",error);
+
+}
 
 
 /* =========================================================
@@ -1188,13 +1249,28 @@ let savedBooks =
    INITIALIZATION
 ========================================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded",function(){
 
     updateAuthUI();
 
     renderBooks();
 
     renderSaved();
+
+    updateCategoryButtons();
+
+});
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+document
+.getElementById("searchInput")
+.addEventListener("input",function(){
+
+    renderBooks();
 
 });
 
@@ -1205,7 +1281,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function updateAuthUI(){
 
-    const authArea = document.getElementById("authArea");
+    const authArea =
+        document.getElementById("authArea");
+
+    if(!authArea) return;
 
     if(currentUser){
 
@@ -1219,11 +1298,11 @@ function updateAuthUI(){
         <div class="dropdown">
 
             <button
-            class="btn btn-outline-custom d-flex align-items-center gap-2"
-            data-bs-toggle="dropdown">
+                class="btn btn-outline-custom d-flex align-items-center gap-2"
+                data-bs-toggle="dropdown">
 
                 <span class="user-avatar">
-                    ${firstLetter}
+                    ${escapeHTML(firstLetter)}
                 </span>
 
                 <span class="d-none d-sm-inline">
@@ -1247,10 +1326,13 @@ function updateAuthUI(){
                 </li>
 
                 <li>
-                    <button class="dropdown-item"
-                    onclick="logout()">
+                    <button
+                        class="dropdown-item"
+                        onclick="logout()">
+
                         <i class="bi bi-box-arrow-right"></i>
                         Logout
+
                     </button>
                 </li>
 
@@ -1264,8 +1346,9 @@ function updateAuthUI(){
 
         authArea.innerHTML = `
 
-        <button class="btn btn-primary-custom ms-lg-2"
-        onclick="openLogin()">
+        <button
+            class="btn btn-primary-custom ms-lg-2"
+            onclick="openLogin()">
 
             Login
 
@@ -1294,22 +1377,33 @@ function openLogin(){
 }
 
 
-document.getElementById("loginForm").addEventListener("submit", function(e){
+document
+.getElementById("loginForm")
+.addEventListener("submit",function(e){
 
     e.preventDefault();
 
     const email =
-        document.getElementById("loginEmail").value
+        document
+        .getElementById("loginEmail")
+        .value
         .trim()
         .toLowerCase();
 
     const password =
-        document.getElementById("loginPassword").value;
+        document
+        .getElementById("loginPassword")
+        .value;
 
     const user =
-        users.find(
-            u => u.email === email && u.password === password
-        );
+        users.find(function(u){
+
+            return (
+                u.email === email &&
+                u.password === password
+            );
+
+        });
 
     if(!user){
 
@@ -1327,14 +1421,20 @@ document.getElementById("loginForm").addEventListener("submit", function(e){
     );
 
     bootstrap.Modal
-        .getInstance(document.getElementById("loginModal"))
-        .hide();
+        .getInstance(
+            document.getElementById("loginModal")
+        )
+        ?.hide();
 
     updateAuthUI();
 
     renderSaved();
 
-    showToast("Welcome back, " + user.name + "!");
+    showToast(
+        "Welcome back, " +
+        user.name +
+        "!"
+    );
 
 });
 
@@ -1358,7 +1458,9 @@ function openSignup(){
 function switchToSignup(){
 
     bootstrap.Modal
-        .getInstance(document.getElementById("loginModal"))
+        .getInstance(
+            document.getElementById("loginModal")
+        )
         ?.hide();
 
     setTimeout(openSignup,250);
@@ -1369,7 +1471,9 @@ function switchToSignup(){
 function switchToLogin(){
 
     bootstrap.Modal
-        .getInstance(document.getElementById("signupModal"))
+        .getInstance(
+            document.getElementById("signupModal")
+        )
         ?.hide();
 
     setTimeout(openLogin,250);
@@ -1377,112 +1481,325 @@ function switchToLogin(){
 }
 
 
-document.getElementById("signupForm").addEventListener("submit", async function(e){
+/*
+=========================================================
+ IMPORTANT EMAILJS SIGNUP FUNCTION
+=========================================================
+*/
+
+document
+.getElementById("signupForm")
+.addEventListener("submit",async function(e){
 
     e.preventDefault();
 
+    const form = this;
+
     const name =
-        document.getElementById("signupName").value.trim();
+        document
+        .getElementById("signupName")
+        .value
+        .trim();
 
     const email =
-        document.getElementById("signupEmail").value.trim().toLowerCase();
+        document
+        .getElementById("signupEmail")
+        .value
+        .trim()
+        .toLowerCase();
 
     const password =
-        document.getElementById("signupPassword").value;
-
-    if(password.length < 6){
-
-        showToast("Password must contain at least 6 characters.");
-
-        return;
-
-    }
-
-    if(users.some(u => u.email === email)){
-
-        showToast("An account with this email already exists.");
-
-        return;
-
-    }
-
-    const newUser = {
-        id:Date.now(),
-        name:name,
-        email:email,
-        password:password
-    };
-
-    users.push(newUser);
-
-    localStorage.setItem(
-        "booknest_users",
-        JSON.stringify(users)
-    );
-
-    currentUser = newUser;
-
-    localStorage.setItem(
-        "booknest_current_user",
-        JSON.stringify(currentUser)
-    );
-
-
-    /* EMAILJS */
+        document
+        .getElementById("signupPassword")
+        .value;
 
     const button =
         document.getElementById("signupButton");
 
+    const status =
+        document.getElementById("emailStatus");
+
+
+    /* Clear previous status */
+
+    status.className = "email-status";
+    status.textContent = "";
+
+
+    /* Validation */
+
+    if(name.length < 2){
+
+        showEmailStatus(
+            "Please enter your name.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(password.length < 6){
+
+        showEmailStatus(
+            "Password must contain at least 6 characters.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(!email.includes("@")){
+
+        showEmailStatus(
+            "Please enter a valid email address.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    /* Duplicate account */
+
+    if(
+        users.some(function(user){
+            return user.email === email;
+        })
+    ){
+
+        showEmailStatus(
+            "An account with this email already exists.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    /* Check EmailJS */
+
+    if(!emailJSReady){
+
+        showEmailStatus(
+            "Email service is not loaded. Check your internet connection and reload the page.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
     button.disabled = true;
 
     button.innerHTML =
-        '<span class="spinner-border spinner-border-sm"></span> Creating...';
+        '<span class="spinner-border spinner-border-sm me-2"></span>Sending email...';
 
 
     try{
 
-        await emailjs.send(
-            EMAILJS_SERVICE_ID,
-            EMAILJS_TEMPLATE_ID,
-            {
-                user_name:name,
-                user_email:email,
-                email:email,
-                name:name,
-                message:
-                    "Welcome to BookNest! Your library account has been created successfully."
-            }
+        console.log("Sending EmailJS request...");
+
+        console.log({
+            service:EMAILJS_SERVICE_ID,
+            template:EMAILJS_TEMPLATE_ID,
+            email:email,
+            name:name
+        });
+
+
+        /*
+         * IMPORTANT:
+         * sendForm() automatically sends:
+         *
+         * user_name
+         * user_email
+         * password
+         * message
+         *
+         * Password is available to EmailJS because it is a
+         * form field, but our template does NOT use it.
+         *
+         * For better security, we remove the password from
+         * the form data immediately before sending by using
+         * send() instead below.
+         */
+
+        const templateParams = {
+
+            user_name:name,
+
+            user_email:email,
+
+            message:
+                "Welcome to BookNest! Your library account has been created successfully."
+
+        };
+
+
+        const response =
+            await emailjs.send(
+                EMAILJS_SERVICE_ID,
+                EMAILJS_TEMPLATE_ID,
+                templateParams
+            );
+
+
+        console.log(
+            "EmailJS success:",
+            response.status,
+            response.text
         );
+
+
+        /*
+         * Only create account after EmailJS succeeds.
+         */
+
+        const newUser = {
+
+            id:Date.now(),
+
+            name:name,
+
+            email:email,
+
+            password:password
+
+        };
+
+
+        users.push(newUser);
+
+        localStorage.setItem(
+            "booknest_users",
+            JSON.stringify(users)
+        );
+
+
+        currentUser = newUser;
+
+        localStorage.setItem(
+            "booknest_current_user",
+            JSON.stringify(currentUser)
+        );
+
+
+        form.reset();
+
+
+        showEmailStatus(
+            "Welcome email sent successfully!",
+            "success"
+        );
+
 
         showToast(
             "Account created and welcome email sent!"
         );
 
+
+        setTimeout(function(){
+
+            bootstrap.Modal
+                .getInstance(
+                    document.getElementById("signupModal")
+                )
+                ?.hide();
+
+            updateAuthUI();
+
+            renderSaved();
+
+        },800);
+
+
     }catch(error){
 
-        console.error("EmailJS error:",error);
+        console.error(
+            "========== EMAILJS ERROR =========="
+        );
+
+        console.error(error);
+
+        console.error(
+            "Status:",
+            error && error.status
+        );
+
+        console.error(
+            "Text:",
+            error && error.text
+        );
+
+        console.error(
+            "==================================="
+        );
+
+
+        let errorMessage =
+            "Email could not be sent.";
+
+
+        if(error && error.text){
+
+            errorMessage =
+                "EmailJS: " + error.text;
+
+        }else if(error && error.message){
+
+            errorMessage =
+                "EmailJS: " + error.message;
+
+        }
+
+
+        showEmailStatus(
+            errorMessage,
+            "error"
+        );
+
 
         showToast(
-            "Account created. Email could not be sent; check your EmailJS template variables."
+            "Email was not sent."
         );
+
+
+    }finally{
+
+        button.disabled = false;
+
+        button.innerHTML =
+            "Create Account";
 
     }
 
-
-    button.disabled = false;
-
-    button.innerHTML = "Create Account";
-
-
-    bootstrap.Modal
-        .getInstance(document.getElementById("signupModal"))
-        .hide();
-
-    updateAuthUI();
-
-    renderSaved();
-
 });
+
+
+/* =========================================================
+   EMAIL STATUS
+========================================================= */
+
+function showEmailStatus(message,type){
+
+    const status =
+        document.getElementById("emailStatus");
+
+    if(!status) return;
+
+    status.textContent = message;
+
+    status.className =
+        "email-status show " + type;
+
+}
 
 
 /* =========================================================
@@ -1501,7 +1818,9 @@ function logout(){
 
     renderSaved();
 
-    showToast("You have been logged out.");
+    showToast(
+        "You have been logged out."
+    );
 
 }
 
@@ -1514,7 +1833,33 @@ function setCategory(category){
 
     currentCategory = category;
 
+    updateCategoryButtons();
+
     renderBooks();
+
+}
+
+
+function updateCategoryButtons(){
+
+    document
+    .querySelectorAll(".category-btn")
+    .forEach(function(button){
+
+        const active =
+            button.dataset.category === currentCategory;
+
+        button.classList.toggle(
+            "btn-primary-custom",
+            active
+        );
+
+        button.classList.toggle(
+            "btn-outline-custom",
+            !active
+        );
+
+    });
 
 }
 
@@ -1524,25 +1869,39 @@ function renderBooks(){
     const grid =
         document.getElementById("bookGrid");
 
+    if(!grid) return;
+
+    const searchInput =
+        document.getElementById("searchInput");
+
     const search =
-        document.getElementById("searchInput")
-        .value
-        .toLowerCase()
-        .trim();
+        searchInput
+        ? searchInput.value.toLowerCase().trim()
+        : "";
 
-    let filtered = books.filter(book => {
 
-        const matchesCategory =
-            currentCategory === "All" ||
-            book.category === currentCategory;
+    const filtered =
+        books.filter(function(book){
 
-        const matchesSearch =
-            book.title.toLowerCase().includes(search) ||
-            book.author.toLowerCase().includes(search);
+            const matchesCategory =
+                currentCategory === "All" ||
+                book.category === currentCategory;
 
-        return matchesCategory && matchesSearch;
+            const matchesSearch =
+                book.title
+                    .toLowerCase()
+                    .includes(search) ||
 
-    });
+                book.author
+                    .toLowerCase()
+                    .includes(search);
+
+            return (
+                matchesCategory &&
+                matchesSearch
+            );
+
+        });
 
 
     if(filtered.length === 0){
@@ -1553,8 +1912,10 @@ function renderBooks(){
 
             <div class="empty">
 
-                <i class="bi bi-search"
-                style="font-size:45px"></i>
+                <i
+                    class="bi bi-search"
+                    style="font-size:45px">
+                </i>
 
                 <h4 class="mt-3">
                     No books found
@@ -1576,7 +1937,9 @@ function renderBooks(){
 
 
     grid.innerHTML =
-        filtered.map(createBookCard).join("");
+        filtered
+        .map(createBookCard)
+        .join("");
 
 }
 
@@ -1593,11 +1956,15 @@ function createBookCard(book){
         <div class="book-card">
 
             <button
-            class="save-btn ${saved ? "saved" : ""}"
-            onclick="toggleSave(${book.id})"
-            title="Save book">
+                class="save-btn ${saved ? "saved" : ""}"
+                onclick="toggleSave(${book.id})"
+                title="Save book">
 
-                <i class="bi ${saved ? "bi-heart-fill" : "bi-heart"}"></i>
+                <i class="bi ${
+                    saved
+                    ? "bi-heart-fill"
+                    : "bi-heart"
+                }"></i>
 
             </button>
 
@@ -1635,8 +2002,8 @@ function createBookCard(book){
                 <div class="d-flex gap-2 mt-3">
 
                     <button
-                    class="btn btn-primary-custom flex-grow-1"
-                    onclick="openBook(${book.id})">
+                        class="btn btn-primary-custom flex-grow-1"
+                        onclick="openBook(${book.id})">
 
                         <i class="bi bi-book-open"></i>
                         Read
@@ -1644,10 +2011,14 @@ function createBookCard(book){
                     </button>
 
                     <button
-                    class="btn btn-outline-custom"
-                    onclick="toggleSave(${book.id})">
+                        class="btn btn-outline-custom"
+                        onclick="toggleSave(${book.id})">
 
-                        <i class="bi ${saved ? "bi-heart-fill" : "bi-heart"}"></i>
+                        <i class="bi ${
+                            saved
+                            ? "bi-heart-fill"
+                            : "bi-heart"
+                        }"></i>
 
                     </button>
 
@@ -1671,10 +2042,14 @@ function createBookCard(book){
 function getUserSaved(){
 
     if(!currentUser){
+
         return [];
+
     }
 
-    return savedBooks[currentUser.email] || [];
+    return (
+        savedBooks[currentUser.email] || []
+    );
 
 }
 
@@ -1719,13 +2094,17 @@ function toggleSave(id){
 
         list.push(id);
 
-        showToast("Book saved to your library.");
+        showToast(
+            "Book saved to your library."
+        );
 
     }else{
 
         list.splice(index,1);
 
-        showToast("Book removed from saved books.");
+        showToast(
+            "Book removed from saved books."
+        );
 
     }
 
@@ -1734,6 +2113,7 @@ function toggleSave(id){
         "booknest_saved",
         JSON.stringify(savedBooks)
     );
+
 
     renderBooks();
 
@@ -1747,6 +2127,8 @@ function renderSaved(){
     const grid =
         document.getElementById("savedGrid");
 
+    if(!grid) return;
+
 
     if(!currentUser){
 
@@ -1756,8 +2138,10 @@ function renderSaved(){
 
             <div class="empty">
 
-                <i class="bi bi-lock"
-                style="font-size:45px"></i>
+                <i
+                    class="bi bi-lock"
+                    style="font-size:45px">
+                </i>
 
                 <h4 class="mt-3">
                     Login required
@@ -1769,8 +2153,8 @@ function renderSaved(){
                 </p>
 
                 <button
-                class="btn btn-primary-custom"
-                onclick="openLogin()">
+                    class="btn btn-primary-custom"
+                    onclick="openLogin()">
 
                     Login
 
@@ -1791,7 +2175,11 @@ function renderSaved(){
         getUserSaved();
 
     const saved =
-        books.filter(book => ids.includes(book.id));
+        books.filter(function(book){
+
+            return ids.includes(book.id);
+
+        });
 
 
     if(saved.length === 0){
@@ -1802,8 +2190,10 @@ function renderSaved(){
 
             <div class="empty">
 
-                <i class="bi bi-bookmark-heart"
-                style="font-size:45px"></i>
+                <i
+                    class="bi bi-bookmark-heart"
+                    style="font-size:45px">
+                </i>
 
                 <h4 class="mt-3">
                     Your saved list is empty
@@ -1826,7 +2216,9 @@ function renderSaved(){
 
 
     grid.innerHTML =
-        saved.map(createBookCard).join("");
+        saved
+        .map(createBookCard)
+        .join("");
 
 }
 
@@ -1851,27 +2243,43 @@ function openBook(id){
 
 
     const book =
-        books.find(b => b.id === id);
+        books.find(function(b){
+
+            return b.id === id;
+
+        });
+
 
     if(!book) return;
 
 
-    document.getElementById("readerTitle")
+    document
+        .getElementById("readerTitle")
         .textContent = book.title;
 
-    document.getElementById("readerAuthor")
-        .textContent = "by " + book.author;
+
+    document
+        .getElementById("readerAuthor")
+        .textContent =
+            "by " + book.author;
 
 
-    document.getElementById("readerText")
+    document
+        .getElementById("readerText")
         .innerHTML =
             book.text
-            .map(p => `<p>${escapeHTML(p)}</p>`)
+            .map(function(p){
+
+                return `<p>${escapeHTML(p)}</p>`;
+
+            })
             .join("");
 
 
-    document.getElementById("readerScreen")
+    document
+        .getElementById("readerScreen")
         .style.display = "block";
+
 
     document.body.style.overflow = "hidden";
 
@@ -1880,7 +2288,8 @@ function openBook(id){
 
 function closeReader(){
 
-    document.getElementById("readerScreen")
+    document
+        .getElementById("readerScreen")
         .style.display = "none";
 
     document.body.style.overflow = "";
@@ -1889,35 +2298,42 @@ function closeReader(){
 
 
 /* =========================================================
-   SECURITY-LIKE READER RESTRICTIONS
+   READER RESTRICTIONS
 ========================================================= */
 
-/*
-   These controls discourage casual copying/downloading.
-   They cannot provide DRM-level protection.
-*/
+document.addEventListener(
+"contextmenu",
+function(e){
 
-document.addEventListener("contextmenu",function(e){
+    const reader =
+        document.getElementById("readerScreen");
 
     if(
-        document.getElementById("readerScreen")
-        .style.display === "block"
+        reader &&
+        reader.style.display === "block"
     ){
 
         e.preventDefault();
 
-        showToast("Right-click is disabled while reading.");
+        showToast(
+            "Right-click is disabled while reading."
+        );
 
     }
 
 });
 
 
-document.addEventListener("keydown",function(e){
+document.addEventListener(
+"keydown",
+function(e){
+
+    const reader =
+        document.getElementById("readerScreen");
 
     if(
-        document.getElementById("readerScreen")
-        .style.display !== "block"
+        !reader ||
+        reader.style.display !== "block"
     ){
 
         return;
@@ -1929,7 +2345,6 @@ document.addEventListener("keydown",function(e){
         e.key.toLowerCase();
 
 
-    /* Ctrl/Cmd + P */
     if(
         (e.ctrlKey || e.metaKey) &&
         key === "p"
@@ -1937,12 +2352,13 @@ document.addEventListener("keydown",function(e){
 
         e.preventDefault();
 
-        showToast("Printing is disabled.");
+        showToast(
+            "Printing is disabled."
+        );
 
     }
 
 
-    /* Ctrl/Cmd + S */
     if(
         (e.ctrlKey || e.metaKey) &&
         key === "s"
@@ -1950,12 +2366,13 @@ document.addEventListener("keydown",function(e){
 
         e.preventDefault();
 
-        showToast("Downloading is disabled.");
+        showToast(
+            "Downloading is disabled."
+        );
 
     }
 
 
-    /* Ctrl/Cmd + C */
     if(
         (e.ctrlKey || e.metaKey) &&
         key === "c"
@@ -1963,12 +2380,13 @@ document.addEventListener("keydown",function(e){
 
         e.preventDefault();
 
-        showToast("Copying is disabled.");
+        showToast(
+            "Copying is disabled."
+        );
 
     }
 
 
-    /* Ctrl/Cmd + U */
     if(
         (e.ctrlKey || e.metaKey) &&
         key === "u"
@@ -1981,27 +2399,39 @@ document.addEventListener("keydown",function(e){
 });
 
 
-document.addEventListener("copy",function(e){
+document.addEventListener(
+"copy",
+function(e){
+
+    const reader =
+        document.getElementById("readerScreen");
 
     if(
-        document.getElementById("readerScreen")
-        .style.display === "block"
+        reader &&
+        reader.style.display === "block"
     ){
 
         e.preventDefault();
 
-        showToast("Copying is disabled while reading.");
+        showToast(
+            "Copying is disabled while reading."
+        );
 
     }
 
 });
 
 
-document.addEventListener("dragstart",function(e){
+document.addEventListener(
+"dragstart",
+function(e){
+
+    const reader =
+        document.getElementById("readerScreen");
 
     if(
-        document.getElementById("readerScreen")
-        .style.display === "block"
+        reader &&
+        reader.style.display === "block"
     ){
 
         e.preventDefault();
@@ -2017,7 +2447,8 @@ document.addEventListener("dragstart",function(e){
 
 function scrollToLibrary(){
 
-    document.getElementById("library")
+    document
+        .getElementById("library")
         .scrollIntoView({
             behavior:"smooth"
         });
@@ -2030,18 +2461,26 @@ function showToast(message){
     const box =
         document.getElementById("toastBox");
 
-    document.getElementById("toastMessage")
-        .textContent = message;
+    const messageBox =
+        document.getElementById("toastMessage");
+
+
+    messageBox.textContent = message;
 
     box.classList.add("show");
 
-    clearTimeout(window.toastTimer);
+
+    clearTimeout(
+        window.toastTimer
+    );
+
 
     window.toastTimer =
-        setTimeout(
-            () => box.classList.remove("show"),
-            3000
-        );
+        setTimeout(function(){
+
+            box.classList.remove("show");
+
+        },4000);
 
 }
 
@@ -2049,10 +2488,15 @@ function showToast(message){
 function escapeHTML(value){
 
     return String(value)
+
         .replaceAll("&","&amp;")
+
         .replaceAll("<","&lt;")
+
         .replaceAll(">","&gt;")
+
         .replaceAll('"',"&quot;")
+
         .replaceAll("'","&#039;");
 
 }
