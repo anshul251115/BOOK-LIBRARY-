@@ -1,171 +1,2481 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>EmailJS Test</title>
+  <title>BookNest — Your Digital Library</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <!-- Bootstrap -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
 
-<style>
-body{
-    margin:0;
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:#080b16;
-    color:white;
-    font-family:Arial,sans-serif;
-}
+  <!-- Bootstrap Icons -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+    rel="stylesheet"
+  >
 
-.box{
-    width:min(90%,450px);
-    background:#111729;
-    padding:30px;
-    border-radius:20px;
-}
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
-input{
-    width:100%;
-    box-sizing:border-box;
-    padding:14px;
-    margin:8px 0 15px;
-    border-radius:10px;
-    border:1px solid #333b55;
-    background:#080b16;
-    color:white;
-}
+  <style>
+    :root {
+      --bg: #07111f;
+      --bg2: #0b1728;
+      --card: rgba(18, 31, 50, 0.88);
+      --card2: rgba(255,255,255,0.055);
+      --text: #f5f7fb;
+      --muted: #9aa9bc;
+      --primary: #7c5cff;
+      --primary2: #00c6ff;
+      --danger: #ff5577;
+      --success: #24d69b;
+      --border: rgba(255,255,255,0.09);
+    }
 
-button{
-    width:100%;
-    padding:14px;
-    border:0;
-    border-radius:10px;
-    background:#7c5cff;
-    color:white;
-    font-weight:bold;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-#result{
-    margin-top:20px;
-    padding:12px;
-    border-radius:10px;
-    display:none;
-    word-break:break-word;
-}
-</style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(124,92,255,.20), transparent 35%),
+        radial-gradient(circle at top right, rgba(0,198,255,.13), transparent 30%),
+        linear-gradient(135deg, var(--bg), var(--bg2));
+      min-height: 100vh;
+    }
+
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+    .navbar {
+      background: rgba(5, 13, 25, .88) !important;
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar-brand {
+      font-weight: 800;
+      font-size: 1.35rem;
+    }
+
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--primary2));
+      margin-right: 8px;
+      box-shadow: 0 8px 25px rgba(124,92,255,.3);
+    }
+
+    .nav-link {
+      color: #b7c4d5 !important;
+      margin: 0 3px;
+      border-radius: 10px;
+      transition: .2s;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: white !important;
+      background: rgba(255,255,255,.07);
+    }
+
+    .navbar-toggler {
+      border-color: rgba(255,255,255,.2);
+    }
+
+    .navbar-toggler-icon {
+      filter: invert(1);
+    }
+
+    .hero {
+      padding: 80px 0 55px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(124,92,255,.13);
+      border: 1px solid rgba(124,92,255,.25);
+      color: #cfc5ff;
+      font-size: .88rem;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 7vw, 5.2rem);
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: -3px;
+      margin-bottom: 20px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #fff, #a58cff, #48d7ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.7;
+      max-width: 700px;
+    }
+
+    .btn-primary-custom {
+      background: linear-gradient(135deg, var(--primary), var(--primary2));
+      color: white;
+      border: none;
+      border-radius: 13px;
+      padding: 13px 20px;
+      font-weight: 700;
+      box-shadow: 0 10px 30px rgba(124,92,255,.22);
+      transition: .2s;
+    }
+
+    .btn-primary-custom:hover {
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 14px 35px rgba(124,92,255,.32);
+    }
+
+    .btn-dark-custom {
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--border);
+      color: white;
+      border-radius: 13px;
+      padding: 13px 20px;
+      font-weight: 700;
+    }
+
+    .btn-dark-custom:hover {
+      color: white;
+      background: rgba(255,255,255,.1);
+    }
+
+    .section {
+      padding: 55px 0;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .section-subtitle {
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .glass {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.18);
+      backdrop-filter: blur(15px);
+    }
+
+    .search-box {
+      position: relative;
+    }
+
+    .search-box i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #8291a7;
+    }
+
+    .search-box input {
+      padding-left: 45px;
+    }
+
+    .form-control,
+    .form-select {
+      background: rgba(255,255,255,.055) !important;
+      color: white !important;
+      border: 1px solid var(--border) !important;
+      border-radius: 12px !important;
+      padding: 12px 14px;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      box-shadow: 0 0 0 3px rgba(124,92,255,.16) !important;
+      border-color: rgba(124,92,255,.6) !important;
+    }
+
+    .form-control::placeholder {
+      color: #77879b;
+    }
+
+    .form-select option {
+      color: #111;
+    }
+
+    .book-card {
+      height: 100%;
+      overflow: hidden;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      transition: .25s;
+      position: relative;
+    }
+
+    .book-card:hover {
+      transform: translateY(-7px);
+      border-color: rgba(124,92,255,.35);
+      box-shadow: 0 20px 45px rgba(0,0,0,.25);
+    }
+
+    .book-cover {
+      height: 260px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 25px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .book-cover::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        transparent,
+        rgba(0,0,0,.45)
+      );
+    }
+
+    .cover-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      width: 100%;
+    }
+
+    .cover-icon {
+      font-size: 50px;
+      margin-bottom: 15px;
+    }
+
+    .cover-title {
+      font-weight: 800;
+      font-size: 1.1rem;
+    }
+
+    .book-info {
+      padding: 18px;
+    }
+
+    .book-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 5px;
+    }
+
+    .book-author {
+      color: var(--muted);
+      font-size: .9rem;
+      margin-bottom: 12px;
+    }
+
+    .category {
+      display: inline-block;
+      padding: 5px 9px;
+      background: rgba(124,92,255,.12);
+      color: #bbaeff;
+      border-radius: 999px;
+      font-size: .75rem;
+      margin-bottom: 15px;
+    }
+
+    .book-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .book-actions button {
+      flex: 1;
+    }
+
+    .icon-btn {
+      width: 43px;
+      height: 43px;
+      flex: 0 0 43px !important;
+      padding: 0 !important;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .saved-active {
+      color: #ffcf4a !important;
+    }
+
+    .feature-card {
+      padding: 25px;
+      height: 100%;
+    }
+
+    .feature-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(124,92,255,.2), rgba(0,198,255,.15));
+      font-size: 24px;
+      margin-bottom: 17px;
+    }
+
+    .feature-card h4 {
+      font-size: 1.1rem;
+      font-weight: 800;
+    }
+
+    .feature-card p {
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 0;
+    }
+
+    footer {
+      margin-top: 50px;
+      border-top: 1px solid var(--border);
+      padding: 35px 0;
+      color: var(--muted);
+    }
+
+    /* Modal */
+
+    .modal-content {
+      background: #0d192b;
+      color: white;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      overflow: hidden;
+    }
+
+    .modal-header {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .modal-footer {
+      border-top: 1px solid var(--border);
+    }
+
+    .btn-close {
+      filter: invert(1);
+    }
+
+    /* Reader */
+
+    #readerScreen {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 3000;
+      background: #060d17;
+      overflow-y: auto;
+    }
+
+    .reader-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: rgba(6,13,23,.94);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 18px;
+    }
+
+    .reader-page {
+      max-width: 850px;
+      margin: 40px auto;
+      padding: 40px;
+      background: #f7f2e8;
+      color: #1d1d1d;
+      min-height: 800px;
+      border-radius: 10px;
+      box-shadow: 0 25px 70px rgba(0,0,0,.3);
+    }
+
+    .reader-page h1 {
+      font-family: Georgia, serif;
+      font-size: 2.2rem;
+      margin-bottom: 8px;
+    }
+
+    .reader-page .reader-author {
+      color: #666;
+      margin-bottom: 35px;
+    }
+
+    .reader-page p {
+      font-family: Georgia, serif;
+      font-size: 1.08rem;
+      line-height: 1.9;
+      margin-bottom: 22px;
+    }
+
+    /* Toast */
+
+    .toast-container {
+      z-index: 5000;
+    }
+
+    .custom-toast {
+      background: #101d30;
+      border: 1px solid var(--border);
+      color: white;
+      border-radius: 14px;
+      box-shadow: 0 15px 45px rgba(0,0,0,.35);
+    }
+
+    /* Empty */
+
+    .empty-state {
+      padding: 60px 20px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .empty-state i {
+      font-size: 55px;
+      display: block;
+      margin-bottom: 15px;
+      opacity: .5;
+    }
+
+    /* User */
+
+    .user-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--border);
+      font-size: .85rem;
+    }
+
+    .user-avatar {
+      width: 29px;
+      height: 29px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--primary2));
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+    }
+
+    /* Email diagnostic */
+
+    .email-status {
+      display: none;
+      margin-top: 14px;
+      padding: 12px;
+      border-radius: 12px;
+      font-size: .85rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .email-status.success {
+      display: block;
+      background: rgba(36,214,155,.1);
+      border: 1px solid rgba(36,214,155,.3);
+      color: #72e8c0;
+    }
+
+    .email-status.error {
+      display: block;
+      background: rgba(255,85,119,.1);
+      border: 1px solid rgba(255,85,119,.3);
+      color: #ff91a7;
+    }
+
+    .email-status.info {
+      display: block;
+      background: rgba(0,198,255,.1);
+      border: 1px solid rgba(0,198,255,.3);
+      color: #75ddff;
+    }
+
+    .small-muted {
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    /* Mobile */
+
+    @media (max-width: 767px) {
+      .hero {
+        padding: 55px 0 35px;
+      }
+
+      .hero h1 {
+        letter-spacing: -1.5px;
+      }
+
+      .book-cover {
+        height: 230px;
+      }
+
+      .reader-page {
+        margin: 20px 10px;
+        padding: 25px 20px;
+      }
+
+      .reader-page h1 {
+        font-size: 1.7rem;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="box">
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container py-2">
 
-<h2>BookNest Email Test</h2>
+    <a class="navbar-brand text-white" href="#" onclick="showHome()">
+      <span class="brand-icon">
+        <i class="bi bi-book-half"></i>
+      </span>
+      BookNest
+    </a>
 
-<p>Enter the email address where you want to receive the test email.</p>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarMenu"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-<input
-    id="email"
-    type="email"
-    placeholder="your@email.com"
-    required>
+    <div class="collapse navbar-collapse" id="navbarMenu">
 
-<button id="sendBtn">
-Send Test Email
-</button>
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
 
-<div id="result"></div>
+        <li class="nav-item">
+          <a class="nav-link active" href="#" onclick="showHome(); return false;">
+            Home
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#library" onclick="scrollToLibrary(); return false;">
+            Library
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#" onclick="showSaved(); return false;">
+            Saved
+          </a>
+        </li>
+
+      </ul>
+
+      <div id="userArea"></div>
+
+    </div>
+  </div>
+</nav>
+
+
+<!-- MAIN WEBSITE -->
+<main id="mainWebsite">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+
+      <div class="hero-badge">
+        <i class="bi bi-stars"></i>
+        Your personal digital library
+      </div>
+
+      <h1>
+        Read more.<br>
+        <span class="gradient-text">Discover more.</span>
+      </h1>
+
+      <p>
+        Explore your favourite books in one beautiful digital library.
+        Create an account, save books you love and read them online.
+      </p>
+
+      <div class="d-flex flex-wrap gap-3 mt-4">
+
+        <button
+          class="btn btn-primary-custom"
+          onclick="scrollToLibrary()"
+        >
+          <i class="bi bi-book me-2"></i>
+          Explore Library
+        </button>
+
+        <button
+          class="btn btn-dark-custom"
+          onclick="openSignup()"
+        >
+          <i class="bi bi-person-plus me-2"></i>
+          Create Free Account
+        </button>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- FEATURES -->
+  <section class="section pt-3">
+    <div class="container">
+
+      <div class="row g-4">
+
+        <div class="col-md-4">
+          <div class="glass feature-card">
+            <div class="feature-icon">
+              <i class="bi bi-book"></i>
+            </div>
+
+            <h4>Read Online</h4>
+
+            <p>
+              Open your favourite books directly inside BookNest
+              without leaving the website.
+            </p>
+          </div>
+        </div>
+
+
+        <div class="col-md-4">
+          <div class="glass feature-card">
+            <div class="feature-icon">
+              <i class="bi bi-bookmark-heart"></i>
+            </div>
+
+            <h4>Save Favourites</h4>
+
+            <p>
+              Save books to your personal collection and quickly
+              find them whenever you return.
+            </p>
+          </div>
+        </div>
+
+
+        <div class="col-md-4">
+          <div class="glass feature-card">
+            <div class="feature-icon">
+              <i class="bi bi-shield-lock"></i>
+            </div>
+
+            <h4>Online Reading</h4>
+
+            <p>
+              BookNest is designed around online reading rather than
+              providing a download button.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- LIBRARY -->
+  <section class="section" id="library">
+
+    <div class="container">
+
+      <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
+
+        <div>
+          <div class="section-title">
+            Explore Library
+          </div>
+
+          <div class="section-subtitle mb-0">
+            Find your next favourite story.
+          </div>
+        </div>
+
+        <div class="search-box" style="width:min(100%,350px);">
+
+          <i class="bi bi-search"></i>
+
+          <input
+            id="searchInput"
+            class="form-control"
+            type="search"
+            placeholder="Search books or authors..."
+            oninput="renderBooks()"
+          >
+
+        </div>
+
+      </div>
+
+
+      <div class="row g-4" id="bookGrid"></div>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<!-- LOGIN MODAL -->
+<div class="modal fade" id="loginModal" tabindex="-1">
+
+  <div class="modal-dialog modal-dialog-centered">
+
+    <div class="modal-content">
+
+      <div class="modal-header">
+
+        <div>
+          <h5 class="modal-title mb-1">
+            Welcome back
+          </h5>
+
+          <div class="small-muted">
+            Login to continue reading.
+          </div>
+        </div>
+
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+
+      </div>
+
+
+      <form id="loginForm">
+
+        <div class="modal-body">
+
+          <div class="mb-3">
+
+            <label class="form-label">
+              Email
+            </label>
+
+            <input
+              type="email"
+              id="loginEmail"
+              class="form-control"
+              placeholder="you@example.com"
+              required
+            >
+
+          </div>
+
+
+          <div class="mb-3">
+
+            <label class="form-label">
+              Password
+            </label>
+
+            <input
+              type="password"
+              id="loginPassword"
+              class="form-control"
+              placeholder="Your password"
+              required
+            >
+
+          </div>
+
+
+          <div
+            id="loginError"
+            class="email-status error"
+          ></div>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+          <button
+            type="button"
+            class="btn btn-dark-custom"
+            onclick="switchToSignup()"
+          >
+            Create account
+          </button>
+
+          <button
+            type="submit"
+            class="btn btn-primary-custom"
+          >
+            Login
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
 
 </div>
 
+
+<!-- SIGNUP MODAL -->
+<div class="modal fade" id="signupModal" tabindex="-1">
+
+  <div class="modal-dialog modal-dialog-centered">
+
+    <div class="modal-content">
+
+      <div class="modal-header">
+
+        <div>
+
+          <h5 class="modal-title mb-1">
+            Create your BookNest account
+          </h5>
+
+          <div class="small-muted">
+            Sign up to save books and start reading.
+          </div>
+
+        </div>
+
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+
+      </div>
+
+
+      <form id="signupForm">
+
+        <div class="modal-body">
+
+          <div class="mb-3">
+
+            <label class="form-label">
+              Your name
+            </label>
+
+            <input
+              type="text"
+              id="signupName"
+              class="form-control"
+              placeholder="Enter your name"
+              required
+            >
+
+          </div>
+
+
+          <div class="mb-3">
+
+            <label class="form-label">
+              Email address
+            </label>
+
+            <input
+              type="email"
+              id="signupEmail"
+              class="form-control"
+              placeholder="you@example.com"
+              required
+            >
+
+          </div>
+
+
+          <div class="mb-3">
+
+            <label class="form-label">
+              Password
+            </label>
+
+            <input
+              type="password"
+              id="signupPassword"
+              class="form-control"
+              placeholder="Create a password"
+              minlength="6"
+              required
+            >
+
+          </div>
+
+
+          <!-- EMAIL DIAGNOSTIC -->
+          <div class="small-muted mt-2">
+            <i class="bi bi-envelope-check me-1"></i>
+            A welcome email will be sent after registration.
+          </div>
+
+          <div
+            id="emailStatus"
+            class="email-status"
+          ></div>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+          <button
+            type="button"
+            class="btn btn-dark-custom"
+            onclick="switchToLogin()"
+          >
+            I already have an account
+          </button>
+
+          <button
+            type="submit"
+            id="signupButton"
+            class="btn btn-primary-custom"
+          >
+            <i class="bi bi-person-plus me-1"></i>
+            Create Account
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- READER -->
+<section id="readerScreen">
+
+  <div class="reader-topbar">
+
+    <div class="container-fluid">
+
+      <div class="d-flex align-items-center justify-content-between gap-3">
+
+        <div class="d-flex align-items-center gap-3">
+
+          <button
+            class="btn btn-dark-custom"
+            onclick="closeReader()"
+          >
+            <i class="bi bi-arrow-left"></i>
+            <span class="d-none d-sm-inline ms-1">Back</span>
+          </button>
+
+          <div>
+
+            <div
+              id="readerTitle"
+              class="fw-bold"
+            >
+              Book
+            </div>
+
+            <div
+              id="readerAuthor"
+              class="small-muted"
+            >
+              Author
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <button
+          class="btn btn-dark-custom"
+          onclick="saveCurrentBook()"
+        >
+          <i class="bi bi-bookmark-heart"></i>
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="reader-page">
+
+    <h1 id="readerPageTitle">
+      Book Title
+    </h1>
+
+    <div
+      id="readerPageAuthor"
+      class="reader-author"
+    >
+      Author
+    </div>
+
+    <div id="readerContent"></div>
+
+  </div>
+
+</section>
+
+
+<!-- TOAST -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+
+  <div
+    id="appToast"
+    class="toast custom-toast"
+    role="alert"
+  >
+
+    <div class="d-flex">
+
+      <div
+        id="toastMessage"
+        class="toast-body"
+      >
+        Done.
+      </div>
+
+      <button
+        type="button"
+        class="btn-close btn-close-white me-2 m-auto"
+        data-bs-dismiss="toast"
+      ></button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- BOOTSTRAP JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
 <script>
+/* =========================================================
+   BOOKNEST CONFIGURATION
+   ========================================================= */
 
-const SERVICE_ID = "service_y8sw1vp";
-const TEMPLATE_ID = "template_77p6jj8";
-const PUBLIC_KEY = "kR99j_G63iMQWnNeB";
+const EMAILJS_SERVICE_ID = "service_y8sw1vp";
+const EMAILJS_TEMPLATE_ID = "template_77p6jj8";
+const EMAILJS_PUBLIC_KEY = "kR99j_G63iMQWnNeB";
 
-emailjs.init({
-    publicKey: PUBLIC_KEY
-});
 
-const button = document.getElementById("sendBtn");
-const result = document.getElementById("result");
+/* =========================================================
+   BOOK DATA
+   ========================================================= */
 
-function showResult(message,success){
+const books = [
 
-    result.style.display = "block";
-    result.textContent = message;
+  {
+    id: 1,
+    title: "The Adventures of Tom Sawyer",
+    author: "Mark Twain",
+    category: "Adventure",
+    icon: "🗺️",
+    gradient: "linear-gradient(135deg,#38598b,#14213d)",
+    content: [
+      "The Adventures of Tom Sawyer follows the imaginative and mischievous life of Tom Sawyer, a young boy growing up beside the Mississippi River.",
+      "Tom loves adventure and often finds himself involved in unusual situations. He enjoys exploring, playing with his friends and finding ways to escape ordinary responsibilities.",
+      "His friendship with Huck Finn leads him into several memorable adventures. Through these experiences, Tom learns about courage, friendship and responsibility.",
+      "The story combines humour, adventure and childhood imagination while showing the world through the eyes of a young boy."
+    ]
+  },
 
-    result.style.background =
-        success
-        ? "#123d2c"
-        : "#401c27";
+  {
+    id: 2,
+    title: "Alice's Adventures in Wonderland",
+    author: "Lewis Carroll",
+    category: "Fantasy",
+    icon: "🐇",
+    gradient: "linear-gradient(135deg,#7d4f9e,#2d1648)",
+    content: [
+      "Alice is sitting beside her sister when she notices a White Rabbit wearing a waistcoat and carrying a pocket watch.",
+      "Curious, Alice follows the rabbit and falls into a strange world known as Wonderland.",
+      "In Wonderland, Alice meets many unusual characters and experiences situations where ordinary rules no longer seem to apply.",
+      "Her journey becomes a playful exploration of imagination, language, logic and identity."
+    ]
+  },
+
+  {
+    id: 3,
+    title: "The Secret Garden",
+    author: "Frances Hodgson Burnett",
+    category: "Classic",
+    icon: "🌿",
+    gradient: "linear-gradient(135deg,#357a55,#112f21)",
+    content: [
+      "Mary Lennox is a lonely child who comes to live at a large house in Yorkshire.",
+      "While exploring the property, Mary discovers the existence of a hidden garden that has been locked for many years.",
+      "With the help of new friends, she begins bringing the neglected garden back to life.",
+      "As the garden changes, Mary and the people around her begin changing too. The story celebrates friendship, nature and hope."
+    ]
+  },
+
+  {
+    id: 4,
+    title: "The Wonderful Wizard of Oz",
+    author: "L. Frank Baum",
+    category: "Fantasy",
+    icon: "🌈",
+    gradient: "linear-gradient(135deg,#3878b8,#19345e)",
+    content: [
+      "Dorothy is carried away from her home by a powerful storm and arrives in a strange land.",
+      "She begins a journey along a road made of yellow bricks in the hope of finding the Wizard of Oz.",
+      "Along the way she meets the Scarecrow, the Tin Woodman and the Cowardly Lion.",
+      "Together they travel through a magical land, discovering that courage, intelligence, friendship and home are more valuable than they first imagined."
+    ]
+  },
+
+  {
+    id: 5,
+    title: "The Adventures of Sherlock Holmes",
+    author: "Arthur Conan Doyle",
+    category: "Mystery",
+    icon: "🔎",
+    gradient: "linear-gradient(135deg,#596275,#202631)",
+    content: [
+      "Sherlock Holmes is a famous detective known for his extraordinary powers of observation and deduction.",
+      "Together with his friend Dr. Watson, Holmes investigates mysterious cases that appear impossible to solve.",
+      "By studying small details that other people overlook, Holmes builds logical explanations for complicated events.",
+      "The stories combine mystery, investigation and clever reasoning as Holmes searches for the truth."
+    ]
+  },
+
+  {
+    id: 6,
+    title: "Little Women",
+    author: "Louisa May Alcott",
+    category: "Classic",
+    icon: "🌸",
+    gradient: "linear-gradient(135deg,#9a526e,#3b1c2a)",
+    content: [
+      "Little Women follows the four March sisters: Meg, Jo, Beth and Amy.",
+      "Although the sisters have different personalities and dreams, they remain closely connected as they grow up.",
+      "Their family experiences both joyful and difficult moments, teaching them about kindness, responsibility and love.",
+      "The story explores family relationships, growing up and finding one's own path in life."
+    ]
+  }
+
+];
+
+
+/* =========================================================
+   APP STATE
+   ========================================================= */
+
+let currentUser = null;
+let currentBook = null;
+
+
+/* =========================================================
+   INITIALIZE EMAILJS
+   ========================================================= */
+
+function initializeEmailJS() {
+
+  const status = document.getElementById("emailStatus");
+
+  if (typeof emailjs === "undefined") {
+
+    console.error("EmailJS library was not loaded.");
+
+    if (status) {
+      showEmailStatus(
+        "EmailJS library could not be loaded. Please check your internet connection and reload the page.",
+        "error"
+      );
+    }
+
+    return false;
+  }
+
+  try {
+
+    emailjs.init({
+      publicKey: EMAILJS_PUBLIC_KEY
+    });
+
+    console.log("EmailJS initialized successfully.");
+
+    return true;
+
+  } catch (error) {
+
+    console.error("EmailJS initialization error:", error);
+
+    return false;
+  }
 }
 
-button.addEventListener("click",async function(){
+
+/* =========================================================
+   LOCAL STORAGE HELPERS
+   ========================================================= */
+
+function getUsers() {
+
+  try {
+    return JSON.parse(localStorage.getItem("booknest_users") || "[]");
+  } catch {
+    return [];
+  }
+
+}
+
+
+function saveUsers(users) {
+
+  localStorage.setItem(
+    "booknest_users",
+    JSON.stringify(users)
+  );
+
+}
+
+
+function getSavedBooks() {
+
+  if (!currentUser) {
+    return [];
+  }
+
+  try {
+
+    return JSON.parse(
+      localStorage.getItem(
+        "booknest_saved_" + currentUser.email
+      ) || "[]"
+    );
+
+  } catch {
+
+    return [];
+  }
+
+}
+
+
+function setSavedBooks(saved) {
+
+  if (!currentUser) return;
+
+  localStorage.setItem(
+    "booknest_saved_" + currentUser.email,
+    JSON.stringify(saved)
+  );
+
+}
+
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+function showToast(message) {
+
+  document.getElementById("toastMessage").textContent = message;
+
+  const toastElement =
+    document.getElementById("appToast");
+
+  const toast =
+    bootstrap.Toast.getOrCreateInstance(toastElement);
+
+  toast.show();
+}
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+function showHome() {
+
+  document.getElementById("mainWebsite").style.display = "block";
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+}
+
+
+function scrollToLibrary() {
+
+  document.getElementById("mainWebsite").style.display = "block";
+
+  setTimeout(() => {
+
+    document.getElementById("library").scrollIntoView({
+      behavior: "smooth"
+    });
+
+  }, 50);
+
+}
+
+
+function updateUserArea() {
+
+  const area = document.getElementById("userArea");
+
+  if (!currentUser) {
+
+    area.innerHTML = `
+      <div class="d-flex gap-2">
+        <button
+          class="btn btn-dark-custom btn-sm"
+          onclick="openLogin()"
+        >
+          Login
+        </button>
+
+        <button
+          class="btn btn-primary-custom btn-sm"
+          onclick="openSignup()"
+        >
+          Sign Up
+        </button>
+      </div>
+    `;
+
+    return;
+  }
+
+
+  const initial =
+    (currentUser.name || "U").charAt(0).toUpperCase();
+
+  area.innerHTML = `
+
+    <div class="dropdown">
+
+      <button
+        class="btn user-pill dropdown-toggle"
+        data-bs-toggle="dropdown"
+      >
+
+        <span class="user-avatar">
+          ${escapeHtml(initial)}
+        </span>
+
+        <span class="d-none d-sm-inline">
+          ${escapeHtml(currentUser.name)}
+        </span>
+
+      </button>
+
+      <ul class="dropdown-menu dropdown-menu-end">
+
+        <li>
+          <span class="dropdown-item-text">
+            ${escapeHtml(currentUser.email)}
+          </span>
+        </li>
+
+        <li>
+          <hr class="dropdown-divider">
+        </li>
+
+        <li>
+          <button
+            class="dropdown-item"
+            onclick="showSaved()"
+          >
+            <i class="bi bi-bookmark-heart me-2"></i>
+            Saved Books
+          </button>
+        </li>
+
+        <li>
+          <button
+            class="dropdown-item text-danger"
+            onclick="logout()"
+          >
+            <i class="bi bi-box-arrow-right me-2"></i>
+            Logout
+          </button>
+        </li>
+
+      </ul>
+
+    </div>
+  `;
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+   ========================================================= */
+
+function escapeHtml(value) {
+
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+}
+
+
+/* =========================================================
+   RENDER BOOKS
+   ========================================================= */
+
+function renderBooks(bookList = books) {
+
+  const grid =
+    document.getElementById("bookGrid");
+
+  const search =
+    document.getElementById("searchInput").value
+      .trim()
+      .toLowerCase();
+
+
+  let filtered = bookList.filter(book => {
+
+    if (!search) return true;
+
+    return (
+      book.title.toLowerCase().includes(search) ||
+      book.author.toLowerCase().includes(search) ||
+      book.category.toLowerCase().includes(search)
+    );
+
+  });
+
+
+  if (filtered.length === 0) {
+
+    grid.innerHTML = `
+
+      <div class="col-12">
+
+        <div class="glass empty-state">
+
+          <i class="bi bi-search"></i>
+
+          <h4>No books found</h4>
+
+          <p>
+            Try another title, author or category.
+          </p>
+
+        </div>
+
+      </div>
+
+    `;
+
+    return;
+  }
+
+
+  const saved = getSavedBooks();
+
+
+  grid.innerHTML = filtered.map(book => {
+
+    const isSaved =
+      saved.includes(book.id);
+
+    return `
+
+      <div class="col-sm-6 col-lg-4">
+
+        <div class="book-card">
+
+          <div
+            class="book-cover"
+            style="background:${book.gradient}"
+          >
+
+            <div class="cover-content">
+
+              <div class="cover-icon">
+                ${book.icon}
+              </div>
+
+              <div class="cover-title">
+                ${escapeHtml(book.title)}
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="book-info">
+
+            <div class="book-title">
+              ${escapeHtml(book.title)}
+            </div>
+
+            <div class="book-author">
+              ${escapeHtml(book.author)}
+            </div>
+
+            <span class="category">
+              ${escapeHtml(book.category)}
+            </span>
+
+
+            <div class="book-actions">
+
+              <button
+                class="btn btn-primary-custom"
+                onclick="openBook(${book.id})"
+              >
+                <i class="bi bi-book-open me-1"></i>
+                Read
+              </button>
+
+
+              <button
+                class="btn btn-dark-custom icon-btn ${isSaved ? "saved-active" : ""}"
+                onclick="toggleSave(${book.id})"
+                title="${isSaved ? "Remove from saved" : "Save book"}"
+              >
+
+                <i class="bi ${
+                  isSaved
+                    ? "bi-bookmark-fill"
+                    : "bi-bookmark"
+                }"></i>
+
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    `;
+
+  }).join("");
+
+}
+
+
+/* =========================================================
+   LOGIN / SIGNUP MODALS
+   ========================================================= */
+
+function openLogin() {
+
+  const modal =
+    bootstrap.Modal.getOrCreateInstance(
+      document.getElementById("loginModal")
+    );
+
+  modal.show();
+
+}
+
+
+function openSignup() {
+
+  const modal =
+    bootstrap.Modal.getOrCreateInstance(
+      document.getElementById("signupModal")
+    );
+
+  modal.show();
+
+}
+
+
+function switchToSignup() {
+
+  bootstrap.Modal.getOrCreateInstance(
+    document.getElementById("loginModal")
+  ).hide();
+
+  setTimeout(openSignup, 300);
+
+}
+
+
+function switchToLogin() {
+
+  bootstrap.Modal.getOrCreateInstance(
+    document.getElementById("signupModal")
+  ).hide();
+
+  setTimeout(openLogin, 300);
+
+}
+
+
+/* =========================================================
+   EMAIL STATUS
+   ========================================================= */
+
+function showEmailStatus(message, type) {
+
+  const box =
+    document.getElementById("emailStatus");
+
+  box.className =
+    "email-status " + type;
+
+  box.textContent = message;
+
+}
+
+
+/* =========================================================
+   SIGNUP
+   ========================================================= */
+
+document.getElementById("signupForm")
+  .addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+
+    const name =
+      document.getElementById("signupName")
+        .value.trim();
 
     const email =
-        document.getElementById("email")
-        .value
-        .trim();
+      document.getElementById("signupEmail")
+        .value.trim()
+        .toLowerCase();
 
-    if(!email){
+    const password =
+      document.getElementById("signupPassword")
+        .value;
 
-        showResult(
-            "Please enter an email address.",
-            false
-        );
 
-        return;
+    const button =
+      document.getElementById("signupButton");
+
+
+    if (!name || !email || !password) {
+
+      showEmailStatus(
+        "Please fill in all fields.",
+        "error"
+      );
+
+      return;
     }
+
+
+    if (password.length < 6) {
+
+      showEmailStatus(
+        "Password must contain at least 6 characters.",
+        "error"
+      );
+
+      return;
+    }
+
+
+    const users = getUsers();
+
+    const alreadyExists =
+      users.some(user => user.email === email);
+
+
+    if (alreadyExists) {
+
+      showEmailStatus(
+        "An account with this email already exists. Please login instead.",
+        "error"
+      );
+
+      return;
+    }
+
+
+    /* EMAILJS CHECK */
+
+    if (typeof emailjs === "undefined") {
+
+      showEmailStatus(
+        "EmailJS is not loaded.\n\n" +
+        "Possible causes:\n" +
+        "1. No internet connection.\n" +
+        "2. EmailJS CDN was blocked.\n" +
+        "3. The page was opened without internet access.",
+        "error"
+      );
+
+      return;
+    }
+
 
     button.disabled = true;
-    button.textContent = "Sending...";
 
-    try{
+    button.innerHTML = `
+      <span class="spinner-border spinner-border-sm me-2"></span>
+      Sending email...
+    `;
 
-        const response = await emailjs.send(
-            SERVICE_ID,
-            TEMPLATE_ID,
-            {
-                user_name:"BookNest Test User",
-                user_email:email,
-                message:"This is a test email from BookNest."
-            }
+
+    showEmailStatus(
+      "Connecting to EmailJS and sending the welcome email...",
+      "info"
+    );
+
+
+    /*
+      IMPORTANT:
+
+      We deliberately do NOT send the password.
+
+      The password remains only in the local browser storage
+      for this demo application.
+    */
+
+    const templateParams = {
+
+      user_name: name,
+
+      user_email: email,
+
+      message:
+        "Welcome to BookNest! Your account has been created successfully. " +
+        "You can now explore the library, read books online and save your favourites."
+
+    };
+
+
+    try {
+
+      console.log("EmailJS request started.");
+
+      console.log({
+        service: EMAILJS_SERVICE_ID,
+        template: EMAILJS_TEMPLATE_ID,
+        publicKey: EMAILJS_PUBLIC_KEY,
+        params: templateParams
+      });
+
+
+      const response =
+        await emailjs.send(
+          EMAILJS_SERVICE_ID,
+          EMAILJS_TEMPLATE_ID,
+          templateParams
         );
 
-        console.log("EmailJS response:",response);
 
-        showResult(
-            "SUCCESS! EmailJS accepted the email request. Status: " +
-            response.status +
-            " / " +
-            response.text,
-            true
-        );
+      console.log(
+        "EmailJS response:",
+        response
+      );
 
-    }catch(error){
 
-        console.error("EMAILJS ERROR:",error);
+      /*
+        IMPORTANT:
+        Only create the local account after EmailJS
+        successfully accepts the message.
+      */
 
-        showResult(
-            "FAILED\n\nStatus: " +
-            (error.status || "unknown") +
-            "\n\nMessage: " +
-            (error.text || error.message || JSON.stringify(error)),
-            false
-        );
+      users.push({
 
-    }finally{
+        name: name,
+
+        email: email,
+
+        password: password,
+
+        createdAt: new Date().toISOString()
+
+      });
+
+
+      saveUsers(users);
+
+
+      currentUser = {
+        name: name,
+        email: email
+      };
+
+
+      localStorage.setItem(
+        "booknest_current_user",
+        JSON.stringify(currentUser)
+      );
+
+
+      showEmailStatus(
+        "✓ Welcome email sent successfully!\n\n" +
+        "EmailJS response: " +
+        response.status +
+        " " +
+        response.text,
+        "success"
+      );
+
+
+      button.innerHTML = `
+        <i class="bi bi-check-circle me-1"></i>
+        Account Created
+      `;
+
+
+      updateUserArea();
+
+      renderBooks();
+
+
+      setTimeout(() => {
+
+        bootstrap.Modal.getOrCreateInstance(
+          document.getElementById("signupModal")
+        ).hide();
+
+        document.getElementById("signupForm").reset();
+
+        document.getElementById("emailStatus").className =
+          "email-status";
 
         button.disabled = false;
-        button.textContent = "Send Test Email";
+
+        button.innerHTML = `
+          <i class="bi bi-person-plus me-1"></i>
+          Create Account
+        `;
+
+        showToast(
+          "Account created successfully. Welcome to BookNest!"
+        );
+
+      }, 1800);
+
+
+    } catch (error) {
+
+      console.error(
+        "EMAILJS ERROR:",
+        error
+      );
+
+
+      let errorText =
+        "Email could not be sent.";
+
+
+      if (error && error.text) {
+
+        errorText +=
+          "\n\nEmailJS message:\n" +
+          error.text;
+
+      }
+
+
+      if (error && error.status) {
+
+        errorText +=
+          "\n\nStatus: " +
+          error.status;
+
+      }
+
+
+      errorText +=
+        "\n\nCheck your EmailJS Service ID, Template ID and template configuration.";
+
+
+      showEmailStatus(
+        errorText,
+        "error"
+      );
+
+
+      button.disabled = false;
+
+      button.innerHTML = `
+        <i class="bi bi-arrow-repeat me-1"></i>
+        Try Again
+      `;
+
+
+      /*
+        Account is NOT created when the email fails.
+      */
 
     }
 
-});
+  });
+
+
+/* =========================================================
+   LOGIN
+   ========================================================= */
+
+document.getElementById("loginForm")
+  .addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+
+    const email =
+      document.getElementById("loginEmail")
+        .value.trim()
+        .toLowerCase();
+
+    const password =
+      document.getElementById("loginPassword")
+        .value;
+
+
+    const error =
+      document.getElementById("loginError");
+
+
+    const users = getUsers();
+
+
+    const user =
+      users.find(
+        u =>
+          u.email === email &&
+          u.password === password
+      );
+
+
+    if (!user) {
+
+      error.className =
+        "email-status error";
+
+      error.textContent =
+        "Invalid email or password.";
+
+      return;
+    }
+
+
+    currentUser = {
+      name: user.name,
+      email: user.email
+    };
+
+
+    localStorage.setItem(
+      "booknest_current_user",
+      JSON.stringify(currentUser)
+    );
+
+
+    error.className =
+      "email-status";
+
+
+    document.getElementById("loginForm").reset();
+
+
+    bootstrap.Modal.getOrCreateInstance(
+      document.getElementById("loginModal")
+    ).hide();
+
+
+    updateUserArea();
+
+    renderBooks();
+
+    showToast(
+      "Welcome back, " + user.name + "!"
+    );
+
+  });
+
+
+/* =========================================================
+   LOGOUT
+   ========================================================= */
+
+function logout() {
+
+  currentUser = null;
+
+  localStorage.removeItem(
+    "booknest_current_user"
+  );
+
+  updateUserArea();
+
+  renderBooks();
+
+  showToast("You have been logged out.");
+
+}
+
+
+/* =========================================================
+   SAVE BOOK
+   ========================================================= */
+
+function toggleSave(bookId) {
+
+  if (!currentUser) {
+
+    showToast(
+      "Please login or create an account to save books."
+    );
+
+    openLogin();
+
+    return;
+  }
+
+
+  let saved =
+    getSavedBooks();
+
+
+  if (saved.includes(bookId)) {
+
+    saved =
+      saved.filter(id => id !== bookId);
+
+    showToast("Book removed from Saved.");
+
+  } else {
+
+    saved.push(bookId);
+
+    showToast("Book saved to your library.");
+
+  }
+
+
+  setSavedBooks(saved);
+
+  renderBooks();
+
+}
+
+
+/* =========================================================
+   SHOW SAVED
+   ========================================================= */
+
+function showSaved() {
+
+  if (!currentUser) {
+
+    showToast(
+      "Please login to see your saved books."
+    );
+
+    openLogin();
+
+    return;
+  }
+
+
+  const savedIds =
+    getSavedBooks();
+
+
+  const savedBooks =
+    books.filter(
+      book => savedIds.includes(book.id)
+    );
+
+
+  const grid =
+    document.getElementById("bookGrid");
+
+
+  document.getElementById("mainWebsite").style.display =
+    "block";
+
+
+  document.getElementById("library")
+    .scrollIntoView({
+      behavior: "smooth"
+    });
+
+
+  if (savedBooks.length === 0) {
+
+    grid.innerHTML = `
+
+      <div class="col-12">
+
+        <div class="glass empty-state">
+
+          <i class="bi bi-bookmark-heart"></i>
+
+          <h4>Your saved library is empty</h4>
+
+          <p>
+            Save a book and it will appear here.
+          </p>
+
+        </div>
+
+      </div>
+
+    `;
+
+    return;
+  }
+
+
+  grid.innerHTML = savedBooks.map(book => {
+
+    return `
+
+      <div class="col-sm-6 col-lg-4">
+
+        <div class="book-card">
+
+          <div
+            class="book-cover"
+            style="background:${book.gradient}"
+          >
+
+            <div class="cover-content">
+
+              <div class="cover-icon">
+                ${book.icon}
+              </div>
+
+              <div class="cover-title">
+                ${escapeHtml(book.title)}
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="book-info">
+
+            <div class="book-title">
+              ${escapeHtml(book.title)}
+            </div>
+
+            <div class="book-author">
+              ${escapeHtml(book.author)}
+            </div>
+
+            <span class="category">
+              ${escapeHtml(book.category)}
+            </span>
+
+
+            <div class="book-actions">
+
+              <button
+                class="btn btn-primary-custom"
+                onclick="openBook(${book.id})"
+              >
+                <i class="bi bi-book-open me-1"></i>
+                Read
+              </button>
+
+              <button
+                class="btn btn-dark-custom icon-btn saved-active"
+                onclick="toggleSave(${book.id})"
+              >
+                <i class="bi bi-bookmark-fill"></i>
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    `;
+
+  }).join("");
+
+}
+
+
+/* =========================================================
+   OPEN BOOK
+   ========================================================= */
+
+function openBook(bookId) {
+
+  if (!currentUser) {
+
+    showToast(
+      "Please login or create an account to read books."
+    );
+
+    openLogin();
+
+    return;
+  }
+
+
+  const book =
+    books.find(
+      b => b.id === bookId
+    );
+
+
+  if (!book) return;
+
+
+  currentBook = book;
+
+
+  document.getElementById("readerTitle")
+    .textContent = book.title;
+
+  document.getElementById("readerAuthor")
+    .textContent = book.author;
+
+  document.getElementById("readerPageTitle")
+    .textContent = book.title;
+
+  document.getElementById("readerPageAuthor")
+    .textContent =
+      "By " + book.author;
+
+
+  document.getElementById("readerContent")
+    .innerHTML =
+      book.content.map(
+        paragraph =>
+          `<p>${escapeHtml(paragraph)}</p>`
+      ).join("");
+
+
+  document.getElementById("mainWebsite")
+    .style.display = "none";
+
+
+  document.getElementById("readerScreen")
+    .style.display = "block";
+
+
+  document.body.classList.add("modal-open");
+
+  window.scrollTo(0, 0);
+
+}
+
+
+/* =========================================================
+   CLOSE READER
+   ========================================================= */
+
+function closeReader() {
+
+  document.getElementById("readerScreen")
+    .style.display = "none";
+
+  document.getElementById("mainWebsite")
+    .style.display = "block";
+
+  document.body.classList.remove("modal-open");
+
+  currentBook = null;
+
+}
+
+
+/* =========================================================
+   SAVE CURRENT BOOK
+   ========================================================= */
+
+function saveCurrentBook() {
+
+  if (!currentBook) return;
+
+  toggleSave(currentBook.id);
+
+}
+
+
+/* =========================================================
+   LOAD CURRENT USER
+   ========================================================= */
+
+function loadCurrentUser() {
+
+  try {
+
+    const saved =
+      JSON.parse(
+        localStorage.getItem(
+          "booknest_current_user"
+        )
+      );
+
+
+    if (saved && saved.email) {
+
+      currentUser = saved;
+
+    }
+
+  } catch {
+
+    currentUser = null;
+
+  }
+
+}
+
+
+/* =========================================================
+   DISABLE DOWNLOAD-STYLE ACTIONS
+   ========================================================= */
+
+document.addEventListener(
+  "contextmenu",
+  function(event) {
+
+    if (
+      document.getElementById("readerScreen")
+        .style.display === "block"
+    ) {
+      event.preventDefault();
+    }
+
+  }
+);
+
+
+document.addEventListener(
+  "keydown",
+  function(event) {
+
+    const readerVisible =
+      document.getElementById("readerScreen")
+        .style.display === "block";
+
+
+    if (!readerVisible) return;
+
+
+    /*
+      Prevent common save/print/copy shortcuts.
+      This is only browser-side protection and is
+      NOT DRM.
+    */
+
+    if (
+      (event.ctrlKey || event.metaKey) &&
+      ["s", "p", "u", "c"].includes(
+        event.key.toLowerCase()
+      )
+    ) {
+
+      event.preventDefault();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   INITIAL APP START
+   ========================================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
+
+    initializeEmailJS();
+
+    loadCurrentUser();
+
+    updateUserArea();
+
+    renderBooks();
+
+    console.log(
+      "BookNest loaded successfully."
+    );
+
+  }
+);
 
 </script>
 
